@@ -12,16 +12,16 @@ BASE_DIR = "C:\Users\\fzuhl\Documents\ppp"
 # SOURCE_DIR      = BASE_DIR + "\\Level 2, pics, toBeArchived"
 # RESULT_DIR_BASE = BASE_DIR + "\\Volumes\\Level 2\\"
 # VOLUME_PREFIX = "L2_"
-# VOLSUFFIX_START = 6137   # did upto L2_6136 on Feb. 19, 2017
+# VOLSUFFIX_START = 6247   # did upto L2_6375 on Dec. 27, 2017
 
 # ##################################################
 # Level 4 Processing
 # ##################################################
-# MAXDIRSIZE = 15728640  # 15 Mbyte directories
-# SOURCE_DIR      = BASE_DIR + "\\Level 4, toBeArchived\\"
-# RESULT_DIR_BASE = BASE_DIR + "\\Volumes\Level 4\\"
-# VOLUME_PREFIX = "L4_"
-# VOLSUFFIX_START = 1462  # did upto L4_1461 on Feb. 19, 2017
+##MAXDIRSIZE = 15728640  # 15 Mbyte directories
+##SOURCE_DIR      = BASE_DIR + "\\Level 4, toBeArchived\\"
+##RESULT_DIR_BASE = BASE_DIR + "\\Volumes\Level 4\\"
+##VOLUME_PREFIX = "L4_"
+##VOLSUFFIX_START = 1465  # did upto L4_1464 on May 29 2017
 
 # ##################################################
 # Level 3 Processing
@@ -39,7 +39,8 @@ BASE_DIR = "C:\Users\\fzuhl\Documents\ppp"
 # SOURCE_DIR      = BASE_DIR + "\\Level 5, toBeArchived\\"
 # RESULT_DIR_BASE = BASE_DIR + "\\Volumes\Level 5\\"
 # VOLUME_PREFIX = "L5_"
-# VOLSUFFIX_START = 157   #did L5_nnna series on Nov 19., accidental duplicate nameing 
+# VOLSUFFIX_START = 254   #did L5_253 on Feb. 14, 2018 
+
 # ##################################################
 # Level 1 Processing
 # ##################################################
