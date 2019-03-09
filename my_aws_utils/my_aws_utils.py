@@ -28,6 +28,14 @@ def get_List_Of_Local_Files(dirName):
     # allFiles = onlyfiles + allFiles
     return allFiles
 
+# TODO: use regex to include and filter files
+def get_filenames(dir, include, exclude):
+    file_names = [fn for fn in get_List_Of_Local_Files(dir) if any(fn.endswith(ext) for ext in include)]
+    file_names = [i.replace(dir, "") for i in file_names]
+    file_names = [i for i in file_names if i not in exclude]
+    resulting_files = [i.strip('/') for i in file_names]
+    return resulting_files
+
 
 def upload(local_file, s3_key, bucket, client_obj):
     # client_obj = boto3.client('s3')
@@ -87,4 +95,8 @@ import datetime
 def filename_log(fname='S3Uploader', fmt='_Date_%Y-%m-%d_Time_H%H-M%M'):
     d = datetime.datetime.now().strftime(fmt).format()
     return fname + d + '.log'
+
+
+
+
 

@@ -5,15 +5,14 @@ import pandas as pd
 import os
 import sys
 
-# log_file_name = my_aws_utils.filename_log(fname="S3Upload_log")
 logging.basicConfig(filename=my_aws_utils.filename_log(fname="logs/S3Upload_log"),
                     filemode='w',
                     format="%(asctime)s, Log level: %(levelname)s, msg: %(message)s",
                     level=logging.INFO)
 
 # File Source
-# LOCAL_SOURCE_DIR = '/Users/fritzzuhl/testdir/'
 LOCAL_SOURCE_DIR = '/Volumes/Seagate Backup Plus Drive/ppp/Drawings'
+LOCAL_SOURCE_DIR = '/Users/fritzzuhl/testdir'
 
 # S3
 BUCKET_NAME = 'zuhlbucket1'
@@ -31,12 +30,13 @@ if not(os.path.exists(LOCAL_SOURCE_DIR)):
     sys.exit(1)
 
 # Get Selected List of Files to Upload, and Purge file_log
-included_extensions = ['jpg','jpeg', 'bmp', 'png', 'gif','txt', 'mp4', 'mp3']
-target_files= [fn for fn in my_aws_utils.get_List_Of_Local_Files(LOCAL_SOURCE_DIR)
-              if any(fn.endswith(ext) for ext in included_extensions)]
-target_files_stripped = [i.replace(LOCAL_SOURCE_DIR,"") for i in target_files]
-target_files_stripped = [i for i in target_files_stripped if i != file_log]
-target_files_stripped = [i.strip('/') for i in target_files_stripped]
+included = ['jpg','jpeg', 'bmp', 'png', 'gif','txt', 'mp4', 'mp3']
+excluded = file_log
+target_files_stripped = my_aws_utils.get_filenames(LOCAL_SOURCE_DIR, included, excluded)
+
+
+
+
 
 file_log = LOCAL_SOURCE_DIR + file_log
 if os.path.exists(file_log):
