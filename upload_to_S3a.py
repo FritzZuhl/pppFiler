@@ -75,5 +75,3 @@ else:
 # Finally, write file_log
 file_log_df.to_csv(file_log, index=False)
 
-print(LOCAL_SOURCE_DIR)
-onlyfiles = [f for f in os.listdir(LOCAL_SOURCE_DIR) if os.path.isfile(os.path.join(LOCAL_SOURCE_DIR, f))]
