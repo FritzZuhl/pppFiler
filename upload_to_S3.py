@@ -11,17 +11,17 @@ logging.basicConfig(filename=my_aws_utils.filename_log(fname="logs/S3Upload_log"
                     level=logging.INFO)
 
 # File Source
-LOCAL_SOURCE_DIR = '/Volumes/Seagate Backup Plus Drive/ppp/Drawings'
-LOCAL_SOURCE_DIR = '/Users/fritzzuhl/testdir'
+LOCAL_SOURCE_DIR = '/Volumes/LaCie/ppp/Volumes/wave02_archived/Level 4'
+# LOCAL_SOURCE_DIR = '/Users/fritzzuhl/testdir'
 
 # S3
 BUCKET_NAME = 'zuhlbucket1'
-MAJOR_DIR_ON_S3 = 'hoosier2'
-DEST_DIR_ON_S3 = 'Drawings'
+MAJOR_DIR_ON_S3 = 'hoosier3'
+DEST_DIR_ON_S3 = 'wave02/Level_4'
 key_prefix = MAJOR_DIR_ON_S3 + '/' + DEST_DIR_ON_S3
 
 
-file_log = 'file_log.csv'
+file_log = 'wave02_level4_file_log.csv'
 
 if not(os.path.exists(LOCAL_SOURCE_DIR)):
     # logging.log(logging.CRITICAL, "Cannot find local source directory %s" % LOCAL_SOURCE_DIR)
@@ -38,7 +38,7 @@ target_files_stripped = my_aws_utils.get_filenames(LOCAL_SOURCE_DIR, included, e
 
 
 
-file_log = LOCAL_SOURCE_DIR + file_log
+# file_log = LOCAL_SOURCE_DIR + file_log
 if os.path.exists(file_log):
     file_log_df = pd.read_csv(file_log)
 else:
