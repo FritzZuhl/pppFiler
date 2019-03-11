@@ -5,7 +5,6 @@ import pandas as pd
 import os
 import sys
 
-
 config = {
         # change each project
         "local_source_dir"              : '/Volumes/LaCie/ppp/Volumes/wave02_archived/Level 4',
@@ -18,12 +17,10 @@ config = {
         "upload_log_filename_prefix"    : "logs/S3Upload_log",
 }
 
-
 logging.basicConfig(filename=my_aws_utils.filename_log(fname=config['upload_log_filename_prefix']),
                     filemode='w',
                     format="%(asctime)s, Log level: %(levelname)s, msg: %(message)s",
                     level=logging.INFO)
-
 
 # File Source
 LOCAL_SOURCE_DIR = config['local_source_dir']
@@ -37,9 +34,6 @@ key_prefix = MAJOR_DIR_ON_S3 + '/' + DEST_DIR_ON_S3
 
 file_log = config['file_log']
 
-
-
-
 if not(os.path.exists(LOCAL_SOURCE_DIR)):
     # logging.log(logging.CRITICAL, "Cannot find local source directory %s" % LOCAL_SOURCE_DIR)
     print("Cannot find local source directory %s" % LOCAL_SOURCE_DIR)
@@ -50,10 +44,6 @@ if not(os.path.exists(LOCAL_SOURCE_DIR)):
 included = ['jpg','jpeg', 'bmp', 'png', 'gif','txt', 'mp4', 'mp3']
 excluded = file_log
 target_files_stripped = my_aws_utils.get_filenames(LOCAL_SOURCE_DIR, included, excluded)
-
-
-
-
 
 # file_log = LOCAL_SOURCE_DIR + file_log
 if os.path.exists(file_log):
