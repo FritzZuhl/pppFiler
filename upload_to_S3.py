@@ -5,23 +5,40 @@ import pandas as pd
 import os
 import sys
 
-logging.basicConfig(filename=my_aws_utils.filename_log(fname="logs/S3Upload_log"),
+
+config = {
+        # change each project
+        "local_source_dir"              : '/Volumes/LaCie/ppp/Volumes/wave02_archived/Level 4',
+        "destination_dir_s3"            : 'wave02/Level_4',
+        "file_log"                      : 'wave02_level4_file_log.csv',
+
+        # don't change often
+        "major_dir_on_s3"               : 'hoosier3',
+        "bucket_name"                   : 'zuhlbucket1',
+        "upload_log_filename_prefix"    : "logs/S3Upload_log",
+}
+
+
+logging.basicConfig(filename=my_aws_utils.filename_log(fname=config['upload_log_filename_prefix']),
                     filemode='w',
                     format="%(asctime)s, Log level: %(levelname)s, msg: %(message)s",
                     level=logging.INFO)
 
+
 # File Source
-LOCAL_SOURCE_DIR = '/Volumes/LaCie/ppp/Volumes/wave02_archived/Level 4'
+LOCAL_SOURCE_DIR = config['local_source_dir']
 # LOCAL_SOURCE_DIR = '/Users/fritzzuhl/testdir'
 
 # S3
-BUCKET_NAME = 'zuhlbucket1'
-MAJOR_DIR_ON_S3 = 'hoosier3'
-DEST_DIR_ON_S3 = 'wave02/Level_4'
+BUCKET_NAME = config['bucket_name']
+MAJOR_DIR_ON_S3 = config['major_dir_on_s3']
+DEST_DIR_ON_S3 = config['destination_dir_s3']
 key_prefix = MAJOR_DIR_ON_S3 + '/' + DEST_DIR_ON_S3
 
+file_log = config['file_log']
 
-file_log = 'wave02_level4_file_log.csv'
+
+
 
 if not(os.path.exists(LOCAL_SOURCE_DIR)):
     # logging.log(logging.CRITICAL, "Cannot find local source directory %s" % LOCAL_SOURCE_DIR)

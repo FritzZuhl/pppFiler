@@ -1,5 +1,3 @@
-import boto3
-import os
 
 '''
 For the given path, get the List of all files in the directory tree 
@@ -88,7 +86,6 @@ def get_buckets(profile=None, region=None):
 
     for bucket in buckets['Buckets']:
         print(bucket['Name'])
-
 
 import datetime
 
