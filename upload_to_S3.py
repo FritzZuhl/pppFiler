@@ -8,9 +8,9 @@ import sys
 
 config = {
         # change each project
-        "local_source_dir"              : '/Volumes/LaCie/ppp/Volumes/wave03_archived',
-        "destination_dir_s3"            : 'wave03',
-        "file_log"                      : 'wave03_file_log.csv',
+        "local_source_dir"              : '/Volumes/LaCie/ppp/Volumes/wave04_archived/Level 2',
+        "destination_dir_s3"            : 'wave04/Level2',
+        "file_log"                      : 'wave04_Level2_file_log.csv',
 
         # don't change often
         "major_dir_on_s3"               : 'hoosier3',
