@@ -1,4 +1,5 @@
 import boto3
+import os
 import my_aws_utils
 import logging
 import pandas as pd
@@ -7,9 +8,9 @@ import sys
 
 config = {
         # change each project
-        "local_source_dir"              : '/Volumes/LaCie/ppp/Volumes/wave02_archived/Level 4',
-        "destination_dir_s3"            : 'wave02/Level_4',
-        "file_log"                      : 'wave02_level4_file_log.csv',
+        "local_source_dir"              : '/Volumes/LaCie/ppp/Volumes/wave03_archived',
+        "destination_dir_s3"            : 'wave03',
+        "file_log"                      : 'wave03_file_log.csv',
 
         # don't change often
         "major_dir_on_s3"               : 'hoosier3',
