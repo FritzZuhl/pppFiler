@@ -1,5 +1,4 @@
 import boto3
-import os
 import my_aws_utils
 import logging
 import pandas as pd
