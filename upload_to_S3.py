@@ -9,12 +9,14 @@ config = {
         # change each project
         "local_source_dir"              : '/Volumes/LaCie/ppp/Volumes/wave04_archived/Level 2',
         "destination_dir_s3"            : 'wave04/Level2',
-        "file_log"                      : 'wave04_Level2_file_log.csv',
+        "file_log"                      : 'file_logs/wave04_Level2_file_log_part2.csv',
 
         # don't change often
         "major_dir_on_s3"               : 'hoosier3',
         "bucket_name"                   : 'zuhlbucket1',
         "upload_log_filename_prefix"    : "logs/S3Upload_log",
+        "force_new_file_list"           : True,
+        "reverse_file_order"            : False
 }
 
 logging.basicConfig(filename=my_aws_utils.filename_log(fname=config['upload_log_filename_prefix']),
@@ -44,9 +46,11 @@ if not(os.path.exists(LOCAL_SOURCE_DIR)):
 included = ['jpg','jpeg', 'bmp', 'png', 'gif','txt', 'mp4', 'mp3']
 excluded = file_log
 target_files_stripped = my_aws_utils.get_filenames(LOCAL_SOURCE_DIR, included, excluded)
+target_files_stripped.sort(reverse=config['reverse_file_order'])
 
-# file_log = LOCAL_SOURCE_DIR + file_log
-if os.path.exists(file_log):
+
+#
+if os.path.exists(file_log) and not config['force_new_file_list']:
     file_log_df = pd.read_csv(file_log)
 else:
     file_log_df = pd.DataFrame(target_files_stripped, columns=['file'])
@@ -63,6 +67,8 @@ uploaded_files_count = 0
 failed_files = 0
 total_files2upload = len(target_files_stripped)
 logging.log(logging.INFO, "******* Starting to upload %s files", total_files2upload)
+
+# Begin Uploading
 for i in range(files2consider):
     this_file, uploaded = tuple(file_log_df.loc[i])
     if uploaded:
