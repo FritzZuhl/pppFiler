@@ -7,7 +7,7 @@ import my_aws_utils
 
 config = {
             # Change for each project
-            'S3_prefix': 'hoosier1/Drawings', # where is it in the bucket?
+            'S3_prefix': 'hoosier2/Drawings', # where is it in the bucket?
             'destination_key_prefix': 'Drawings',   # what part of S3_prefix do you want to keep?
 
             # Rarely Change
@@ -17,6 +17,10 @@ config = {
 
 a = my_aws_utils.get_keys(config['bucket'], prefix=config['S3_prefix'])
 
+a_gen = get_matching_s3_keys(config['bucket'], prefix=config['S3_prefix'])
+
+
+], suffix=''):
 
 
 s3 = boto3.resource('s3')

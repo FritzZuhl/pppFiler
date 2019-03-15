@@ -1,4 +1,8 @@
 import os
+import boto3
+import botocore
+import datetime
+
 '''
 For the given path, get the List of all files in the directory tree 
 '''
@@ -87,7 +91,6 @@ def get_buckets(profile=None, region=None):
     for bucket in buckets['Buckets']:
         print(bucket['Name'])
 
-import datetime
 
 def filename_log(fname='S3Uploader', fmt='_Date_%Y-%m-%d_Time_H%H-M%M'):
     d = datetime.datetime.now().strftime(fmt).format()
@@ -108,9 +111,6 @@ def download_objects(bucket, S3_prefix, destination_dir):
     file_names = get_filenames(keys)
 
     file_names_full = destination_dir/file_names
-
-
-
 
 
 

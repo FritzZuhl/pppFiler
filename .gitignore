@@ -4,6 +4,9 @@ logs/**
 *.log
 file_logs/
 .idea/
+__pycache__
+**/__pycache__
+
 
 
 # Windows image file caches
