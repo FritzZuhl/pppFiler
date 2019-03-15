@@ -1,18 +1,16 @@
 import boto3
 import my_aws_utils
 import logging
-import pandas as pd
 import os
-import sys
 
 config = {
         # change each project
         "local_source_dir"              : '/Volumes/LaCie/ppp/Volumes/wave05_archive/Level 2',
         "destination_dir_s3"            : 'wave05/Level2',
-        "file_log"                      : 'file_logs/wave05_Level2_file_log.csv',
+        "file_log"                      : 'file_logs/test.csv',
 
         # don't change often
-        "major_dir_on_s3"               : 'hoosier3',
+        "major_dir_on_s3"               : 'hoosier4',
         "bucket_name"                   : 'zuhlbucket1',
         "upload_log_filename_prefix"    : "logs/S3Upload_log",
         "force_new_file_list"           : True,
@@ -24,28 +22,19 @@ logging.basicConfig(filename=my_aws_utils.filename_log(fname=config['upload_log_
                     format="%(asctime)s, Log level: %(levelname)s, msg: %(message)s",
                     level=logging.INFO)
 
-# File Source
-LOCAL_SOURCE_DIR = config['local_source_dir']
-# LOCAL_SOURCE_DIR = '/Users/fritzzuhl/testdir'
-
-# S3
-BUCKET_NAME = config['bucket_name']
-MAJOR_DIR_ON_S3 = config['major_dir_on_s3']
-DEST_DIR_ON_S3 = config['destination_dir_s3']
-key_prefix = MAJOR_DIR_ON_S3 + '/' + DEST_DIR_ON_S3
-
+key_prefix = config['major_dir_on_s3'] + '/' + config['destination_dir_s3']
 file_log = config['file_log']
 
-if not(os.path.exists(LOCAL_SOURCE_DIR)):
+if not(os.path.exists(config['local_source_dir']):
     # logging.log(logging.CRITICAL, "Cannot find local source directory %s" % LOCAL_SOURCE_DIR)
-    print("Cannot find local source directory %s" % LOCAL_SOURCE_DIR)
+    print("Cannot find local source directory %s" % config['local_source_dir']
     print("Exiting.")
     sys.exit(1)
 
 # Get Selected List of Files to Upload, and Purge file_log
 included = ['jpg','jpeg', 'bmp', 'png', 'gif','txt', 'mp4', 'mp3']
 excluded = file_log
-target_files_stripped = my_aws_utils.get_filenames(LOCAL_SOURCE_DIR, included, excluded)
+target_files_stripped = my_aws_utils.get_filenames(config['local_source_dir'], included, excluded)
 target_files_stripped.sort(reverse=config['reverse_file_order'])
 
 
@@ -76,11 +65,11 @@ for i in range(files2consider):
         continue
 
     s3key = key_prefix + '/' + this_file # key on S3
-    this_file_path = LOCAL_SOURCE_DIR + '/' + this_file # complete path of local file
+    this_file_path = config['local_source_dir']+ '/' + this_file # complete path of local file
 
     logging.log(logging.INFO, "Attempting upload: local file %s. S3 Key: %s" % (this_file, s3key))
     try:
-        my_aws_utils.upload(this_file_path, s3key, BUCKET_NAME, S3_client)
+        my_aws_utils.upload(this_file_path, s3key, config['bucket_name'], S3_client)
         logging.log(logging.INFO, "upload success, %d file uploaded, %d files to go." % (i,(total_files2upload-i)))
     except NameError:
         logging.log(logging.CRITICAL, "Cannot find upload function")

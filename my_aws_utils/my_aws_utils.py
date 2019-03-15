@@ -1,7 +1,9 @@
 import os
 import boto3
-import botocore
 import datetime
+
+
+
 
 '''
 For the given path, get the List of all files in the directory tree 
@@ -30,9 +32,19 @@ def get_List_Of_Local_Files(dirName):
     # allFiles = onlyfiles + allFiles
     return allFiles
 
+
 # TODO: use regex to include and filter files
-def get_filenames(dir, include, exclude):
-    file_names = [fn for fn in get_List_Of_Local_Files(dir) if any(fn.endswith(ext) for ext in include)]
+# Get local filenames.
+# Uses get_List_Of_Local_Files().
+# returns relative file paths from dir
+def get_filenames(dir, include=None, exclude=None):
+    if exclude is None:
+        exclude = []
+    if include is None:
+        file_names = [fn for fn in get_List_Of_Local_Files(dir)]
+    else:
+        file_names = [fn for fn in get_List_Of_Local_Files(dir) if any(fn.endswith(ext) for ext in include)]
+
     file_names = [i.replace(dir, "") for i in file_names]
     file_names = [i for i in file_names if i not in exclude]
     resulting_files = [i.strip('/') for i in file_names]
@@ -96,25 +108,21 @@ def filename_log(fname='S3Uploader', fmt='_Date_%Y-%m-%d_Time_H%H-M%M'):
     d = datetime.datetime.now().strftime(fmt).format()
     return fname + d + '.log'
 
-
 def get_keys(bucket, prefix=''):
     key_gen = get_matching_s3_keys(bucket, prefix)
     res = [x for x in key_gen]
     return res
 
-
-
 def download_objects(bucket, S3_prefix, destination_dir):
     # get keys
     keys = get_keys(bucket, S3_prefix)
-
     file_names = get_filenames(keys)
 
     file_names_full = destination_dir/file_names
 
 
 
-def get_matching_s3_keys(bucket, prefix='', suffix=''):
+def get_key_generator(bucket, prefix='', suffix=''):
     """
     Generate the keys in an S3 bucket.
 
@@ -139,7 +147,6 @@ def get_matching_s3_keys(bucket, prefix='', suffix=''):
             key = obj['Key']
             if key.startswith(prefix) and key.endswith(suffix):
                 yield key
-
         # The S3 API is paginated, returning up to 1000 keys at a time.
         # Pass the continuation token into the next response, until we
         # reach the final page (when this field is missing).
@@ -148,5 +155,23 @@ def get_matching_s3_keys(bucket, prefix='', suffix=''):
         except KeyError:
             break
 
+
+
+from pathlib import Path
+
+def make_needed_parents(file_path):
+    p = Path(file_path)
+
+    if p.exists():
+        return True
+    parent_path = p.parents[0]
+    if parent_path.exists():
+        return True
+    else:
+        try:
+            parent_path.mkdir(parents=True, exist_ok=True)
+            return True
+        except FileExistsError:
+            return True
 
 

@@ -1,43 +1,48 @@
-import boto3
 import botocore
 import my_aws_utils
-
-
+import logging
 
 
 config = {
             # Change for each project
-            'S3_prefix': 'hoosier2/Drawings', # where is it in the bucket?
-            'destination_key_prefix': 'Drawings',   # what part of S3_prefix do you want to keep?
+            'S3_prefix'                 : 'hoosier2/Drawings', # where is it in the bucket?
+            'destination_key_prefix'    : '',   # what part of S3_prefix do you want to keep?
 
-            # Rarely Change
-            'bucket' : 'zuhlbucket1',
-            'distination_dir' : '/Users/fritzzuhl/Dropbox/pppFiler/returns'
+            # Rarely Changeo
+            'download_log_filename_prefix': 'logs/S3download_log',
+            'bucket'                    : 'zuhlbucket1',
+            'destination_dir'           : '/Users/fritzzuhl/documents'
           }
 
-a = my_aws_utils.get_keys(config['bucket'], prefix=config['S3_prefix'])
+logging.basicConfig(filename=my_aws_utils.filename_log(fname=config['download_log_filename_prefix']),
+                    filemode='w',
+                    format="%(asctime)s, Log level: %(levelname)s, msg: %(message)s",
+                    level=logging.INFO)
 
-a_gen = get_matching_s3_keys(config['bucket'], prefix=config['S3_prefix'])
 
+# Get the key ends
+# These are complete path keys that belong to a particular prefix.
+try:
+    particular_keys = [x for x in my_aws_utils.get_key_generator(config['bucket'], prefix=config['S3_prefix'])]
+except KeyError:
+    print("There may be a problem with the S3 parameters")
 
-], suffix=''):
 
 
 s3 = boto3.resource('s3')
 
-pic = s3.get_object(Bucket='zuhlbucket1', Key=x_keys[0])['Body']
-
-# get filename at end of key
-file_name = found_keys[0].split('/').pop()
-
-
-try:
-    s3.Bucket('zuhlbucket1').download_file(x_keys[0], 'my_local_image.jpg')
-except botocore.exceptions.ClientError as e:
-    if e.response['Error']['Code'] == "404":
-        print("The object does not exist.")
-    else:
-        raise
-
+# get the S3 objects
+# write them to destination directory
+for i, this_key in enumerate(particular_keys):
+    # add destination_dir to key_ends to create complete path
+    dest_complete_path = config['destination_dir'] + '/' + this_key
+    my_aws_utils.make_needed_parents(dest_complete_path)
+    try:
+        s3.Bucket('zuhlbucket1').download_file(this_key, dest_complete_path)
+    except botocore.exceptions.ClientError as e:
+        if e.response['Error']['Code'] == "404":
+            print("The object does not exist.")
+        else:
+            raise
 
 
