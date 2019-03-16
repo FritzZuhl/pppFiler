@@ -1,7 +1,9 @@
-import boto3
 import my_aws_utils
 import logging
 import os
+import sys
+import pandas as pd
+import boto3
 
 config = {
         # change each project
@@ -25,14 +27,13 @@ logging.basicConfig(filename=my_aws_utils.filename_log(fname=config['upload_log_
 key_prefix = config['major_dir_on_s3'] + '/' + config['destination_dir_s3']
 file_log = config['file_log']
 
-if not(os.path.exists(config['local_source_dir']):
-    # logging.log(logging.CRITICAL, "Cannot find local source directory %s" % LOCAL_SOURCE_DIR)
-    print("Cannot find local source directory %s" % config['local_source_dir']
+if not os.path.exists(config['local_source_dir']):
+    print("Cannot find local source directory %s" % config['local_source_dir'])
     print("Exiting.")
     sys.exit(1)
 
 # Get Selected List of Files to Upload, and Purge file_log
-included = ['jpg','jpeg', 'bmp', 'png', 'gif','txt', 'mp4', 'mp3']
+included = ['jpg', 'jpeg', 'bmp', 'png', 'gif', 'txt', 'mp4', 'mp3']
 excluded = file_log
 target_files_stripped = my_aws_utils.get_filenames(config['local_source_dir'], included, excluded)
 target_files_stripped.sort(reverse=config['reverse_file_order'])
@@ -64,24 +65,24 @@ for i in range(files2consider):
         logging.log(logging.INFO, "Local file %s already uploaded." % this_file)
         continue
 
-    s3key = key_prefix + '/' + this_file # key on S3
-    this_file_path = config['local_source_dir']+ '/' + this_file # complete path of local file
-
+    s3key = key_prefix + '/' + this_file  # key on S3
+    this_file_path = config['local_source_dir'] + '/' + this_file  # complete path of local file
     logging.log(logging.INFO, "Attempting upload: local file %s. S3 Key: %s" % (this_file, s3key))
+
     try:
         my_aws_utils.upload(this_file_path, s3key, config['bucket_name'], S3_client)
-        logging.log(logging.INFO, "upload success, %d file uploaded, %d files to go." % (i,(total_files2upload-i)))
+        logging.log(logging.INFO, "upload success, %d file uploaded, %d files to go." % (i, (total_files2upload-i)))
     except NameError:
         logging.log(logging.CRITICAL, "Cannot find upload function")
-    except:
         failed_files += 1
         logging.log(logging.CRITICAL, "File %s could not upload" % this_file)
         continue
+
     uploaded_files_count += 1
-    file_log_df.iloc[i,1] = True
+    file_log_df.iloc[i, 1] = True
 
 logging.log(logging.INFO, "Uploaded %d files" % uploaded_files_count)
-if failed_files==0:
+if failed_files == 0:
     logging.log(logging.INFO, "Uploaded all files.")
 else:
     logging.log(logging.INFO, "Failed to upload %d files" % failed_files)

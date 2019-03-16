@@ -2,12 +2,7 @@ import os
 import boto3
 import datetime
 
-
-
-
-'''
-For the given path, get the List of all files in the directory tree 
-'''
+# For the given path, get the List of all files in the directory tree
 def get_List_Of_Local_Files(dirName):
     # create a list of file and sub directories
     # names in the given directory
@@ -121,7 +116,6 @@ def download_objects(bucket, S3_prefix, destination_dir):
     file_names_full = destination_dir/file_names
 
 
-
 def get_key_generator(bucket, prefix='', suffix=''):
     """
     Generate the keys in an S3 bucket.
@@ -156,9 +150,7 @@ def get_key_generator(bucket, prefix='', suffix=''):
             break
 
 
-
 from pathlib import Path
-
 def make_needed_parents(file_path):
     p = Path(file_path)
 
