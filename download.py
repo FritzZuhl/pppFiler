@@ -6,8 +6,8 @@ import sys
 
 config = {
             # Change for each project
-            'S3_prefix'                 : 'hoosier2/Drawings',  # where is it in the bucket?
-            'destination_key_prefix'    : '',   # what part of S3_prefix do you want to keep?
+            'S3_prefix'                 : 'hoosier1/vid03',  # where is it in the bucket?
+            # 'destination_key_prefix'    : '',   # what part of S3_prefix do you want to keep?
 
             # Rarely Changeo
             'download_log_filename_prefix': 'logs/S3download_log',
