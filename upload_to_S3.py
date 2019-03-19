@@ -7,12 +7,12 @@ import boto3
 
 config = {
         # change each project
-        "local_source_dir"              : '/Volumes/LaCie/ppp/Volumes/wave08_archived/Level 4',
-        "destination_dir_s3"            : 'wave08/Level2',
-        "file_log"                      : 'file_logs/wave08_level2.csv',
+        "local_source_dir"              : '/Users/fritzzuhl/Downloads/vid_20190318',
+        "destination_dir_s3"            : 'vid_20190318',
+        "file_log"                      : 'file_logs/misc3.csv',
 
         # don't change often
-        "major_dir_on_s3"               : 'hoosier3',
+        "major_dir_on_s3"               : 'hoosier1',
         "bucket_name"                   : 'zuhlbucket1',
         "upload_log_filename_prefix"    : "logs/S3Upload_log",
         "force_new_file_list"           : True,
