@@ -28,7 +28,11 @@ config_template = {
         "reverse_file_order"            : False
 }
 
-these_dirs = ['L4_00', 'L4_001', 'L4_002', 'L4_003', 'L4_004']
+# Completed March 22
+# these_dirs = ['L4_00', 'L4_001', 'L4_002', 'L4_003']
+
+these_dirs = ['L4_004', 'L4_005', 'L4_006', 'L4_007']
+
 
 config_list = []
 for i,this_dir in enumerate(these_dirs):
