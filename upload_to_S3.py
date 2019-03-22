@@ -21,7 +21,7 @@ config_template = {
         "file_log"                      : 'file_logs/{}.csv',
 
         # don't change often
-        "major_dir_on_s3"               : 'hoosier1',
+        "major_dir_on_s3"               : 'hoosier4',
         "bucket_name"                   : 'zuhlbucket1',
         "upload_log_filename_prefix"    : "logs/S3Upload_log",
         "force_new_file_list"           : True,
@@ -39,8 +39,6 @@ for i,this_dir in enumerate(these_dirs):
 
     config_list.append(this_config)
     my_aws_utils.upload_S3(**this_config)
-
-
 
 
 
