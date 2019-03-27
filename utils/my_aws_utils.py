@@ -171,11 +171,14 @@ def make_needed_parents(file_path):
 
 def upload_S3(**kwargs):
 
-    # Log Configuration
-    logging.basicConfig(filename=filename_log(fname=kwargs['upload_log_filename_prefix']),
-                        filemode='w',
-                        format="%(asctime)s, Log level: %(levelname)s, msg: %(message)s",
-                        level=logging.INFO)
+    # Create Logging
+    object_log_filename = filename_log(fname=kwargs['upload_log_filename_prefix'])
+    local_logger = logging.getLogger()
+    local_logger.setLevel(logging.INFO)
+    log_file_hander = logging.FileHandler(object_log_filename)
+    local_logger.addHandler(log_file_hander)
+
+
 
     # construct key prefix
     key_prefix = kwargs['major_dir_on_s3'] + '/' + kwargs['destination_dir_s3']
@@ -249,4 +252,6 @@ def upload_S3(**kwargs):
         file_log_df.to_csv(file_log, index=False)
     except OSError:
         file_log_df.to_csv('/Users/fritzzuhl/Dropbox/pppFiler/file_logs/file_log.csv', index=False)
+
+    local_logger.removeHandler(log_file_hander)
 
