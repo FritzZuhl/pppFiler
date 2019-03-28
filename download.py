@@ -6,13 +6,13 @@ import sys
 
 config = {
             # Change for each project
-            'S3_prefix'                 : 'hoosier1/vid03',  # where is it in the bucket?
+            'S3_prefix'                 : 'hoosier1/vid-002',  # where is it in the bucket?
             # 'destination_key_prefix'    : '',   # what part of S3_prefix do you want to keep?
 
             # Rarely Changeo
             'download_log_filename_prefix': 'logs/S3download_log',
             'bucket'                    : 'zuhlbucket1',
-            'destination_dir'           : '/Users/fritzzuhl/documents'
+            'destination_dir'           : '/Users/fritzzuhl/Putain'
           }
 
 logging.basicConfig(filename=my_aws_utils.filename_log(fname=config['download_log_filename_prefix']),
