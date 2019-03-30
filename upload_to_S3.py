@@ -18,7 +18,7 @@ import logging
 
 config_template = {
         # change each project
-        "local_source_dir"              : '/Volumes/LaCie/Audio_Video_Shows/{}',
+        "local_source_dir"              : '/Volumes/LaCie/ppp/Video/{}',
         "destination_dir_s3"            : '{}',
         "file_log"                      : 'file_logs/{}.csv',
 
@@ -32,10 +32,14 @@ config_template = {
 
 # Completed March 22
 # these_dirs = ['L4_00', 'L4_001', 'L4_002', 'L4_003']
-
 # these_dirs = ['L4_004', 'L4_005', 'L4_006', 'L4_007']
 # these_dirs = ['L4_Dfolders']
-these_dirs = os.listdir("/Volumes/LaCie/Audio_Video_Shows")
+# these_dirs = os.listdir("/Volumes/LaCie/Audio_Video_Shows")
+
+# Work on March 30
+these_dirs1 = ['group_04', 'group_05', 'group_06', 'group_07', 'group_08', 'group_09']
+these_dirs2 = [ 'group_' + str(x) for x in range(10,21)]
+these_dirs = these_dirs1 + these_dirs2
 these_dirs.sort()
 
 dir_log = my_aws_utils.filename_log('logs/directories_uploaded')
