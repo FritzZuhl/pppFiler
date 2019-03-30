@@ -38,7 +38,7 @@ config_template = {
 these_dirs = os.listdir("/Volumes/LaCie/Audio_Video_Shows")
 these_dirs.sort()
 
-dir_log = my_aws_utils.filename_log('directories_uploaded')
+dir_log = my_aws_utils.filename_log('logs/directories_uploaded')
 
 directory_logger = logging.getLogger()
 directory_logger.setLevel(logging.INFO)
