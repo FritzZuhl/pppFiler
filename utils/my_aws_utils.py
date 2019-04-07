@@ -195,8 +195,7 @@ def upload_S3(**kwargs):
     # Get Selected List of Files to Upload, and Purge file_log
     # included = ['wmv', 'iso', 'ISO', 'avi', 'jpg', 'jpeg', 'bmp', 'png', 'gif', 'txt',
     # 'mp4', 'mp3', 'mpg']
-    excluded = file_log
-    target_files_stripped = get_filenames(kwargs['local_source_dir'], included=None, excluded)
+    target_files_stripped = get_filenames(kwargs['local_source_dir'], include=None, exclude=file_log)
     target_files_stripped.sort(reverse=kwargs['reverse_file_order'])
 
 
