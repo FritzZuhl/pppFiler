@@ -229,9 +229,16 @@ def upload_S3(**kwargs):
         this_file_path = kwargs['local_source_dir'] + '/' + this_file  # complete path of local file
         logging.log(logging.INFO, "Attempting upload: local file %s. S3 Key: %s" % (this_file, s3key))
 
+        # Check if file/key already exists in S3
+        existing_keys = get_existing_keys(kwargs['bucket_name'], prefix=key_prefix)
+        if s3key in existing_keys:
+            logging.log(logging.INFO, "local file %s already present as key %s \n" % (this_file_path, s3key))
+            continue
+        # End check on redundancy
+
         try:
             upload(this_file_path, s3key, kwargs['bucket_name'], S3_client)
-            logging.log(logging.INFO, "upload success, %d file uploaded, %d files to go." % (i, (total_files2upload-i)))
+            logging.log(logging.INFO, "upload success, %d file uploaded, %d files to go.\n" % (i + 1, (total_files2upload - (i + 1))))
         except NameError:
             logging.log(logging.CRITICAL, "Cannot find upload function")
             failed_files += 1
@@ -243,7 +250,7 @@ def upload_S3(**kwargs):
 
     logging.log(logging.INFO, "Uploaded %d files" % uploaded_files_count)
     if failed_files == 0:
-        logging.log(logging.INFO, "Uploaded all files.")
+        logging.log(logging.INFO, "Finished with local source directory %s" % kwargs['local_source_dir'])
     else:
         logging.log(logging.INFO, "Failed to upload %d files" % failed_files)
 

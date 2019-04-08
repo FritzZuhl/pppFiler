@@ -9,6 +9,7 @@ verify_ssl = true
 boto3 = "*"
 pandas = "*"
 fuzzywuzzy = "*"
+appnope = "*"
 
 [requires]
 python_version = "3.7"
