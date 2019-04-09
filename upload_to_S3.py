@@ -38,11 +38,11 @@ config_template = {
         "upload_log_filename_prefix"    : "logs/S3Upload_log",
         "force_new_file_list"           : True,
         "reverse_file_order"            : False,
-        "ignore_files"                  : ['.DS_Store', '.descript.ion']
+        "ignore_files"                  : ['.DS_Store', 'descript.ion']
 
 }
 
-these_dirs = ['group_06']
+these_dirs = ['group_07']
 these_dirs.sort()
 dir_log = my_aws_utils.filename_log('logs/directories_uploaded')
 directory_logger = logging.getLogger()

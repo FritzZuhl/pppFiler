@@ -219,7 +219,7 @@ def upload_S3(**kwargs):
     total_files2upload = len(target_files_stripped)
     logging.log(logging.INFO, "******* Starting to upload %s files", total_files2upload)
 
-    ignore_files = kwargs['ignore_files'] + ['.DS_Store', '.descript.ion']
+    ignore_files = kwargs['ignore_files'] + ['.DS_Store', 'descript.ion']
 
     #
     for i in range(files2consider):
