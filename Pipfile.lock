@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f70bb3152a7da5c33dbc8afa5be9cd2403f1de00ee620c41cd77068fc28130df"
+            "sha256": "74e8bdf0ff9c1d9fe3cac83199e042760228f72752b957decfd1b53fb253cbd5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -38,6 +38,13 @@
                 "sha256:59376112fdee707927b644dd44a1771861f8fe354a48d596131ced83d7a3c05b"
             ],
             "version": "==1.12.130"
+        },
+        "caffeine": {
+            "hashes": [
+                "sha256:40092894e2e79652ec2ed7a41508ff3b06b60e041ad42c86ff54d64220332d3a"
+            ],
+            "index": "pypi",
+            "version": "==0.5"
         },
         "docutils": {
             "hashes": [

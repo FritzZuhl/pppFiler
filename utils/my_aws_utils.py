@@ -215,15 +215,25 @@ def upload_S3(**kwargs):
     # Begin Upload
     uploaded_files_count = 0
     failed_files = 0
+    pass_over_count = 0
     total_files2upload = len(target_files_stripped)
     logging.log(logging.INFO, "******* Starting to upload %s files", total_files2upload)
+
+    ignore_files = kwargs['ignore_files'] + ['.DS_Store', '.descript.ion']
 
     #
     for i in range(files2consider):
         this_file, uploaded = tuple(file_log_df.loc[i])
-        if uploaded:
-            logging.log(logging.INFO, "Local file %s already uploaded." % this_file)
+        # if uploaded:
+        #     logging.log(logging.INFO, "Local file %s already uploaded." % this_file)
+        #     continue
+
+        # Is file on ignore list?
+        if this_file in ignore_files:
+            logging.log(loggin.INFO, "Passing over file %s. On ignore list" % this_file)
+            pass_over_count += 1
             continue
+
 
         s3key = key_prefix + '/' + this_file  # key on S3
         this_file_path = kwargs['local_source_dir'] + '/' + this_file  # complete path of local file
@@ -233,6 +243,7 @@ def upload_S3(**kwargs):
         existing_keys = get_existing_keys(kwargs['bucket_name'], prefix=key_prefix)
         if s3key in existing_keys:
             logging.log(logging.INFO, "local file %s already present as key %s \n" % (this_file_path, s3key))
+            pass_over_count += 1
             continue
         # End check on redundancy
 
@@ -248,11 +259,13 @@ def upload_S3(**kwargs):
         uploaded_files_count += 1
         file_log_df.iloc[i, 1] = True
 
-    logging.log(logging.INFO, "Uploaded %d files" % uploaded_files_count)
+    logging.log(logging.INFO, "Uploaded %d files.\n" % uploaded_files_count)
     if failed_files == 0:
-        logging.log(logging.INFO, "Finished with local source directory %s" % kwargs['local_source_dir'])
+        logging.log(logging.INFO, "Finished with local source directory %s.\n" % kwargs['local_source_dir'])
     else:
-        logging.log(logging.INFO, "Failed to upload %d files" % failed_files)
+        logging.log(logging.INFO, "Failed to upload %d files.\n" % failed_files)
+
+    logging.log(logging.INFO, "Passed over %d files that were listed on ignored file list.\n" % pass_over_count)
 
     # Finally, write file_log
     try:

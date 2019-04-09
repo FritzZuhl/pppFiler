@@ -1,13 +1,14 @@
 import sys
 sys.path.append('/Users/fritzzuhl/Dropbox/pppFiler/utils')
 
-
 import my_aws_utils
 # import os
 import logging
 
-import appnope
-appnope.nope()
+# import appnope
+# appnope.nope()
+
+import caffeine
 
 # config = {
 #         # change each project
@@ -22,10 +23,8 @@ appnope.nope()
 #         "force_new_file_list"           : True,
 #         "reverse_file_order"            : False
 # }
-
 # my_aws_utils.upload_S3(**config)
 # sys.exit()
-
 
 config_template = {
         # change each project
@@ -38,15 +37,14 @@ config_template = {
         "bucket_name"                   : 'zuhlbucket1',
         "upload_log_filename_prefix"    : "logs/S3Upload_log",
         "force_new_file_list"           : True,
-        "reverse_file_order"            : False
+        "reverse_file_order"            : False,
+        "ignore_files"                  : ['.DS_Store', '.descript.ion']
+
 }
 
-
-these_dirs = ['group_05']
+these_dirs = ['group_06']
 these_dirs.sort()
-
 dir_log = my_aws_utils.filename_log('logs/directories_uploaded')
-
 directory_logger = logging.getLogger()
 directory_logger.setLevel(logging.INFO)
 log_file_handler = logging.FileHandler(dir_log)
@@ -68,9 +66,5 @@ for i, this_dir in enumerate(these_dirs):
     directory_logger.addHandler(log_file_handler)
     logging.log(logging.INFO, "Completed upload of directory %s", this_dir)
     directory_logger.removeHandler(log_file_handler)
-
-
-
-
 
 
