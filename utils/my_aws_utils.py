@@ -230,7 +230,7 @@ def upload_S3(**kwargs):
 
         # Is file on ignore list?
         if this_file in ignore_files:
-            logging.log(loggin.INFO, "Passing over file %s. On ignore list" % this_file)
+            logging.log(logging.INFO, "Passing over file %s. On ignore list" % this_file)
             pass_over_count += 1
             continue
 

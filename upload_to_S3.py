@@ -17,7 +17,7 @@ import caffeine
 #         "file_log"                      : 'file_logs/testdir.csv',
 #
 #         # don't change often
-#         "major_dir_on_s3"               : 'hoosier1',
+#         "major_dir_on_s3"               : 'hoosier5',
 #         "bucket_name"                   : 'zuhlbucket1',
 #         "upload_log_filename_prefix"    : "logs/S3Upload_log",
 #         "force_new_file_list"           : True,
@@ -26,14 +26,16 @@ import caffeine
 # my_aws_utils.upload_S3(**config)
 # sys.exit()
 
+# /Users/fritzzuhl/Putain/group_09
+
 config_template = {
         # change each project
         "local_source_dir"              : '/Users/fritzzuhl/Putain/{}',
+        "major_dir_on_s3"               : 'hoosier5',
         "destination_dir_s3"            : '{}',
         "file_log"                      : 'file_logs/{}.csv',
 
         # don't change often
-        "major_dir_on_s3"               : 'hoosier5',
         "bucket_name"                   : 'zuhlbucket1',
         "upload_log_filename_prefix"    : "logs/S3Upload_log",
         "force_new_file_list"           : True,
@@ -41,8 +43,9 @@ config_template = {
         "ignore_files"                  : ['.DS_Store', 'descript.ion']
 
 }
+these_dirs = ['group_09', 'group_10']
 
-these_dirs = ['group_08a', 'group_08b', 'group_08c', 'group_08d']
+# Rarely Change
 these_dirs.sort()
 dir_log = my_aws_utils.filename_log('logs/directories_uploaded')
 directory_logger = logging.getLogger()
