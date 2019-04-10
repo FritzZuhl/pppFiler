@@ -42,7 +42,7 @@ config_template = {
 
 }
 
-these_dirs = ['group_07']
+these_dirs = ['group_08a', 'group_08b', 'group_08c', 'group_08d']
 these_dirs.sort()
 dir_log = my_aws_utils.filename_log('logs/directories_uploaded')
 directory_logger = logging.getLogger()
