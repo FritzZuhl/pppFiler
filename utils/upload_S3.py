@@ -7,6 +7,7 @@ import AWS_S3
 
 def upload_S3(**kwargs):
     """
+    # Here is an example configuration object
     # config = {
     #         # change each project
     #         "local_source_dir"              : '/Users/fritzzuhl/testdir', # base of local dir
@@ -35,7 +36,7 @@ def upload_S3(**kwargs):
 
 
 
-    # construct key prefix
+    # construct key prefix, include major and sub-directories within major.
     key_prefix = kwargs['major_dir_on_s3'] + '/' + kwargs['destination_dir_s3']
 
     # File Log - a list of files/keys of concern
@@ -51,7 +52,6 @@ def upload_S3(**kwargs):
     target_files_stripped = local_file_handling.get_filenames(kwargs['local_source_dir'])
     target_files_stripped.sort(reverse=kwargs['reverse_file_order'])
 
-
     # Set File Log
     if os.path.exists(file_log) and not kwargs['force_new_file_list']:
         file_log_df = pd.read_csv(file_log)
@@ -59,10 +59,11 @@ def upload_S3(**kwargs):
         file_log_df = pd.DataFrame(target_files_stripped, columns=['file'])
         file_log_df["uploaded"] = False
 
-    # check on shape
+    # check on shape of file log
     files2consider, columns = file_log_df.shape
 
     # Connect to S3
+    # TODO Throw proper exception if cannot connect.
     S3_client = boto3.client('s3')
 
     # Begin Upload
@@ -92,6 +93,7 @@ def upload_S3(**kwargs):
         this_file_path = kwargs['local_source_dir'] + '/' + this_file  # complete path of local file
         logging.log(logging.INFO, "Attempting upload: local file %s. S3 Key: %s" % (this_file, s3key))
 
+        # TODO upload_S3 function, move file list purgeing to before for loop.
         # Check if file/key already exists in S3
         existing_keys = AWS_S3.get_existing_keys(kwargs['bucket_name'], prefix=key_prefix)
         if s3key in existing_keys:

@@ -91,6 +91,3 @@ def get_key_generator(bucket, prefix='', suffix=''):
             kwargs['ContinuationToken'] = resp['NextContinuationToken']
         except KeyError:
             break
-
-
-

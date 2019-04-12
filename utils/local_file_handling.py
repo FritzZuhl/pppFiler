@@ -28,7 +28,6 @@ def get_List_Of_Local_Files(dirName):
     return allFiles
 
 
-
 # TODO: use regex to include and filter files
 # Get local filenames.
 # Uses get_List_Of_Local_Files().
@@ -47,11 +46,9 @@ def get_filenames(dir, include=None, exclude=None):
     return resulting_files
 
 
-
 def filename_log(fname='S3Uploader', fmt='_Date_%Y-%m-%d_Time_H%H-M%M'):
     d = datetime.datetime.now().strftime(fmt).format()
     return fname + d + '.log'
-
 
 
 from pathlib import Path
