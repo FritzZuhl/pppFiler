@@ -1,6 +1,6 @@
 import boto3
 import botocore
-import my_aws_utils
+import upload_S3
 import logging
 import sys
 
@@ -15,7 +15,7 @@ config = {
             'destination_dir'           : '/Users/fritzzuhl/Putain'
           }
 
-logging.basicConfig(filename=my_aws_utils.filename_log(fname=config['download_log_filename_prefix']),
+logging.basicConfig(filename=upload_S3.filename_log(fname=config['download_log_filename_prefix']),
                     filemode='w',
                     format="%(asctime)s, Log level: %(levelname)s, msg: %(message)s",
                     level=logging.INFO)
@@ -24,7 +24,7 @@ logging.basicConfig(filename=my_aws_utils.filename_log(fname=config['download_lo
 # These are complete path keys that belong to a particular prefix.
 logging.log(logging.INFO, "****** Starting to download")
 try:
-    particular_keys = [x for x in my_aws_utils.get_key_generator(config['bucket'], prefix=config['S3_prefix'])]
+    particular_keys = [x for x in upload_S3.get_key_generator(config['bucket'], prefix=config['S3_prefix'])]
 except KeyError:
     print("There may be a problem with the S3 parameters")
     sys.exit(1)
@@ -39,7 +39,7 @@ N = len(particular_keys)
 for i, this_key in enumerate(particular_keys):
     # add destination_dir to key_ends to create complete path
     dest_complete_path = config['destination_dir'] + '/' + this_key
-    my_aws_utils.make_needed_parents(dest_complete_path)
+    upload_S3.make_needed_parents(dest_complete_path)
     try:
         s3.Bucket('zuhlbucket1').download_file(this_key, dest_complete_path)
         logging.log(logging.INFO, "Downloaded this key %s. Complete filepath %s" % (this_key,dest_complete_path))

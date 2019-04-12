@@ -1,30 +1,27 @@
 import sys
 sys.path.append('/Users/fritzzuhl/Dropbox/pppFiler/utils')
-
-import my_aws_utils
-# import os
+import upload_S3
 import logging
 
-# import appnope
-# appnope.nope()
 
 import caffeine
 
-# config = {
-#         # change each project
-#         "local_source_dir"              : '/Users/fritzzuhl/testdir',
-#         "destination_dir_s3"            : 'testdir',
-#         "file_log"                      : 'file_logs/testdir.csv',
-#
-#         # don't change often
-#         "major_dir_on_s3"               : 'hoosier5',
-#         "bucket_name"                   : 'zuhlbucket1',
-#         "upload_log_filename_prefix"    : "logs/S3Upload_log",
-#         "force_new_file_list"           : True,
-#         "reverse_file_order"            : False
-# }
-# my_aws_utils.upload_S3(**config)
-# sys.exit()
+config = {
+        # change each project
+        "local_source_dir"              : '/Users/fritzzuhl/testdir',
+        "destination_dir_s3"            : 'testdir',
+        "file_log"                      : 'file_logs/testdir.csv',
+
+        # don't change often
+        "major_dir_on_s3"               : 'hoosier5',
+        "bucket_name"                   : 'zuhlbucket1',
+        "upload_log_filename_prefix"    : "logs/S3Upload_log",
+        "force_new_file_list"           : True,
+        "reverse_file_order"            : False,
+        "ignore_files"                  : []
+}
+upload_S3.upload_S3(**config)
+sys.exit()
 
 # /Users/fritzzuhl/Putain/group_09
 
@@ -47,7 +44,7 @@ these_dirs = ['group_09', 'group_10']
 
 # Rarely Change
 these_dirs.sort()
-dir_log = my_aws_utils.filename_log('logs/directories_uploaded')
+dir_log = upload_S3.filename_log('logs/directories_uploaded')
 directory_logger = logging.getLogger()
 directory_logger.setLevel(logging.INFO)
 log_file_handler = logging.FileHandler(dir_log)
@@ -64,7 +61,7 @@ for i, this_dir in enumerate(these_dirs):
     logging.log(logging.INFO, "Starting to upload directory %s", this_dir)
     directory_logger.removeHandler(log_file_handler)
 
-    my_aws_utils.upload_S3(**this_config)
+    upload_S3.upload_S3(**this_config)
 
     directory_logger.addHandler(log_file_handler)
     logging.log(logging.INFO, "Completed upload of directory %s", this_dir)
