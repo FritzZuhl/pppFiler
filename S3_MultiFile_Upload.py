@@ -37,7 +37,7 @@ config_template = {
         "ignore_files"                  : ['.DS_Store', 'descript.ion']
 
 }
-these_dirs = ['group_12']
+these_dirs = ['group_16', 'group_17', 'group_18', 'group_19', 'group_20', 'group_21']
 these_dirs.sort()
 
 # Log Setup

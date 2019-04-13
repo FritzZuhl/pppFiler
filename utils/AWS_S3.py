@@ -1,24 +1,16 @@
 import boto3
 
 
-def upload(local_file, s3_key, bucket, client_obj):
-    # client_obj = boto3.client('s3')
-    try:
-        with open(local_file, 'rb') as data:
-            client_obj.upload_fileobj(data, bucket, s3_key)
-            return ""
-    except FileNotFoundError:
-        raise FileNotFoundError
-    except TypeError:
-        raise TypeError
-
-
 def get_existing_keys(bucket_name, prefix='/', delimiter='/'):
     prefix = prefix[1:] if prefix.startswith(delimiter) else prefix
     bucket = boto3.resource('s3').Bucket(bucket_name)
     these_keys = [_.key for _ in bucket.objects.filter(Prefix=prefix)]
     return these_keys
 
+def get_keys(bucket, prefix=''):
+    key_gen = get_matching_s3_keys(bucket, prefix)
+    res = [x for x in key_gen]
+    return res
 
 def get_buckets(profile=None, region=None):
     import botocore
@@ -45,18 +37,12 @@ def get_buckets(profile=None, region=None):
         print(bucket['Name'])
 
 
-def get_keys(bucket, prefix=''):
-    key_gen = get_matching_s3_keys(bucket, prefix)
-    res = [x for x in key_gen]
-    return res
-
 def download_objects(bucket, S3_prefix, destination_dir):
     # get keys
     keys = get_keys(bucket, S3_prefix)
     file_names = get_filenames(keys)
 
     file_names_full = destination_dir/file_names
-
 
 
 def get_key_generator(bucket, prefix='', suffix=''):
@@ -91,3 +77,15 @@ def get_key_generator(bucket, prefix='', suffix=''):
             kwargs['ContinuationToken'] = resp['NextContinuationToken']
         except KeyError:
             break
+
+def upload(local_file, s3_key, bucket, client_obj):
+    # client_obj = boto3.client('s3')
+    try:
+        with open(local_file, 'rb') as data:
+            client_obj.upload_fileobj(data, bucket, s3_key)
+            return ""
+    except FileNotFoundError:
+        raise FileNotFoundError
+    except TypeError:
+        raise TypeError
+

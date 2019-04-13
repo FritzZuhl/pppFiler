@@ -26,15 +26,12 @@ def upload_S3(**kwargs):
     :return:
     """
 
-
     # Create Logging
     object_log_filename = local_file_handling.filename_log(fname=kwargs['upload_log_filename_prefix'])
     local_logger = logging.getLogger()
     local_logger.setLevel(logging.INFO)
     log_file_hander = logging.FileHandler(object_log_filename)
     local_logger.addHandler(log_file_hander)
-
-
 
     # construct key prefix, include major and sub-directories within major.
     key_prefix = kwargs['major_dir_on_s3'] + '/' + kwargs['destination_dir_s3']
@@ -75,12 +72,14 @@ def upload_S3(**kwargs):
 
     ignore_files = kwargs['ignore_files'] + ['.DS_Store', 'descript.ion']
 
+    # TODO add loop that purges files.
+    # TODO get size of files
+    # TODO construct complete s3key
+    # TODO contruct data frame with (1) complete local file, (2) complete s3key, (3)
+
     #
     for i in range(files2consider):
         this_file, uploaded = tuple(file_log_df.loc[i])
-        # if uploaded:
-        #     logging.log(logging.INFO, "Local file %s already uploaded." % this_file)
-        #     continue
 
         # Is file on ignore list?
         if this_file in ignore_files:
@@ -111,6 +110,7 @@ def upload_S3(**kwargs):
             logging.log(logging.CRITICAL, "File %s could not upload" % this_file)
             continue
 
+        # TODO add timestamp to when a file is uploaded
         uploaded_files_count += 1
         file_log_df.iloc[i, 1] = True
 
