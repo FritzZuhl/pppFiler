@@ -31,13 +31,15 @@ config_template = {
 
         # don't change often
         "bucket_name"                   : 'zuhlbucket1',
+#       "bucket_name"                   : 'entertainment49019',
         "upload_log_filename_prefix"    : "logs/S3Upload_log",
         "force_new_file_list"           : True,
         "reverse_file_order"            : False,
         "ignore_files"                  : ['.DS_Store', 'descript.ion']
 
 }
-these_dirs = ['group_16', 'group_17', 'group_18', 'group_19', 'group_20', 'group_21']
+# these_dirs = ['group_20', 'group_21', 'videoLevel5_archived28Nov2017', 'largeSizedMovies']
+these_dirs = ['group_21', 'group_22', 'group_23']
 these_dirs.sort()
 
 # Log Setup

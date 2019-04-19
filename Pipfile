@@ -11,6 +11,7 @@ pandas = "*"
 fuzzywuzzy = "*"
 appnope = "*"
 caffeine = "*"
+ppretty = "*"
 
 [requires]
 python_version = "3.7"
