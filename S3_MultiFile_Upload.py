@@ -39,8 +39,8 @@ config_template = {
 
 }
 # these_dirs = ['group_20', 'group_21', 'videoLevel5_archived28Nov2017', 'largeSizedMovies']
-these_dirs = ['group_21', 'group_22', 'group_23']
-these_dirs.sort()
+these_dirs = ['video_small', 'video_Level_3_toArchive', 'video_Level_2']
+# these_dirs.sort()
 
 # Log Setup
 dir_log = local_file_handling.filename_log('logs/directories_uploaded')

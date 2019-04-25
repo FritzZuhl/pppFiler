@@ -95,16 +95,22 @@ def Key_Info(Key, Bucket=None):
     """
     :param Key: s3 key
     :param Bucket: s3 bucket
-    :return: {Key, Etag, ContentLength, basename}
+    :return: {basename, Key, ContentLength, Etag }
     """
 
     s3_client = boto3.client('s3')
     s3_response_key = s3_client.head_object(Bucket=Bucket, Key=Key)
     #
-    return_dict = {}
-    return_dict.update(Key=Key)
-    return_dict.update(ETag=s3_response_key['ETag'].strip('"'))
-    return_dict.update(ContentLength = s3_response_key['ContentLength'])
-    return_dict.update(basename=ntpath.basename(Key))
+    ETag = s3_response_key['ETag'].strip('"')
+    ContentLength = s3_response_key['ContentLength']
+    basename = ntpath.basename(Key)
+
+    return_dict = {
+        'Basename'      : basename,
+        'Key'           : Key,
+        'ContentLength' : ContentLength,
+        'ETag'          : ETag
+    }
+
     return return_dict
 

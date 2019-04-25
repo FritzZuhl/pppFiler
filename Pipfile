@@ -12,6 +12,7 @@ fuzzywuzzy = "*"
 appnope = "*"
 caffeine = "*"
 ppretty = "*"
+sqlalchemy = "*"
 
 [requires]
 python_version = "3.7"
