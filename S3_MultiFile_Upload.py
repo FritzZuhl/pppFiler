@@ -22,9 +22,10 @@ import logging
 # upload_S3.upload_S3(**config)
 # sys.exit()
 
+
 config_template = {
         # change each project
-        "local_source_dir"              : '/Users/fritzzuhl/Putain/{}',
+        "local_source_dir"              : '/Volumes/Seagate Backup Plus Drive/ppp/Video/{}',
         "major_dir_on_s3"               : 'hoosier5',
         "destination_dir_s3"            : '{}',
         "file_log"                      : 'file_logs/{}.csv',
@@ -38,8 +39,10 @@ config_template = {
         "ignore_files"                  : ['.DS_Store', 'descript.ion']
 
 }
+these_dirs = ['group_21', 'group_22', 'group_23']
+
 # these_dirs = ['group_20', 'group_21', 'videoLevel5_archived28Nov2017', 'largeSizedMovies']
-these_dirs = ['video_small', 'video_Level_3_toArchive', 'video_Level_2']
+# these_dirs = ["videoLevel5_archived28Nov2017", "largeSizedMovies"]
 # these_dirs.sort()
 
 # Log Setup
