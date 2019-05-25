@@ -1,0 +1,14 @@
+kwargs['upload_log_filename_prefix']
+
+kwargs['major_dir_on_s3']
+
+kwargs['local_source_dir']
+
+kwargs['top_path']
+
+kwargs['ignore_files']
+
+kwargs['check_existing_keys']
+
+kwargs['bucket_name'],
+

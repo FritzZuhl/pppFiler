@@ -1,5 +1,8 @@
 pppFiler
 ========
 
-Simple picture achiver
+Simple picture achiver.
+
+Upload to S3.
+
 
