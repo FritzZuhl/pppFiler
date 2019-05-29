@@ -7,13 +7,15 @@ import local_file_handling
 import logging
 import pathlib
 
+# The directory to upload
+# these_dirs = ['group_22', 'group_23', 'group_24']
+these_dirs = ['group_24']
+
 config_template = {
-        # change each project
-        "file_name"                     : '',
         "top_path"                      : '{}',
-        "local_source_dir"              : '/Volumes/Seagate Backup Plus Drive/ppp/Level2_from_discs',
-        "major_dir_on_s3"               : 'hoosier4',
-        "check_existing_keys"           : False,
+        "local_source_dir"              : '/Volumes/Seagate Backup Plus Drive/ppp/Video',
+        "major_dir_on_s3"               : 'hoosier5',
+        "check_existing_keys"           : True,
 
         # don't change often
         "bucket_name"                   : 'zuhlbucket1',
@@ -22,26 +24,29 @@ config_template = {
 
 }
 
+check_logs = False
+# this is the path to check
+## path = 'logs/directories_uploaded_Date_2019-05-22_Time_H11-M48.log'
 
 local_source_dir = pathlib.Path(config_template['local_source_dir'])
 if not local_source_dir.exists():
     print("local source directory does not exists.")
     sys.exit(1)
 
-these_dirs = [x.stem for x in local_source_dir.iterdir() if x.is_dir()]
+# check upload logs, and purge directories that are listed within, since they've been uploaded.
+if check_logs:
+    def words_in_text(path):
+        with open(path) as handle:
+            for line in handle:
+                words = line.split()
+                if words[0] == 'Completed':
+                    yield words[-1]
 
-path = 'logs/directories_uploaded_Date_2019-05-22_Time_H11-M48.log'
-def words_in_text(path):
-    with open(path) as handle:
-        for line in handle:
-            words = line.split()
-            if words[0] == 'Completed':
-                yield words[-1]
+    completed_dirs = [x for x in words_in_text(path)]
 
-completed_dirs = [x for x in words_in_text(path)]
+    these_dirs = [x for x in these_dirs if x not in completed_dirs]
+# End check upload
 
-these_dirs = [x for x in these_dirs if x not in completed_dirs]
-                  
 these_dirs.sort(reverse=False)
 
 # Log Setup

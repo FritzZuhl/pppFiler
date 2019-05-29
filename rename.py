@@ -2,8 +2,9 @@
 import boto3
 
 s3BucketName = 'zuhlbucket1'
-oldFolderKey = 'hoosier5/grp24_Archived_29Nov2017_dir3'
-newFolderKey = 'hoosier5/group_24'
+oldFolderKey = 'hoosier5/video_Level_3_toArchive'
+newFolderKey = 'hoosier5/vid_Level3'
+
 
 
 session = boto3.Session()
