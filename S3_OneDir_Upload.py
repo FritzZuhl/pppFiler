@@ -1,21 +1,21 @@
 
 import sys
 import caffeine
-sys.path.append('/Users/fzuhl/Dropbox/pppFiler/utils')
+sys.path.append('/Users/fritz/Dropbox/pppFiler/utils')   # use on new macbook
+# sys.path.append('/Users/fzuhl/Dropbox/pppFiler/utils') # use on old macbooks
 import upload_S3
 import local_file_handling
 import logging
 import pathlib
 
 # The directory to upload
-# these_dirs = ['group_22', 'group_23', 'group_24']
-these_dirs = ['group_24']
+these_dirs = ['vid_20190702']
 
 config_template = {
         "top_path"                      : '{}',
-        "local_source_dir"              : '/Volumes/Seagate Backup Plus Drive/ppp/Video',
-        "major_dir_on_s3"               : 'hoosier5',
-        "check_existing_keys"           : True,
+        "local_source_dir"              : '/Users/fritz/Downloads',
+        "major_dir_on_s3"               : 'hoosier1',
+        "check_existing_keys"           : True,        # does a file-level check
 
         # don't change often
         "bucket_name"                   : 'zuhlbucket1',
@@ -24,7 +24,7 @@ config_template = {
 
 }
 
-check_logs = False
+check_logs = False  # does a directory-level check on redundancy
 # this is the path to check
 ## path = 'logs/directories_uploaded_Date_2019-05-22_Time_H11-M48.log'
 
@@ -34,6 +34,8 @@ if not local_source_dir.exists():
     sys.exit(1)
 
 # check upload logs, and purge directories that are listed within, since they've been uploaded.
+# these check prevents redundant directories to be uploaded.
+# Whereas the check in upload_S3 checks on the file within the directory.
 if check_logs:
     def words_in_text(path):
         with open(path) as handle:
