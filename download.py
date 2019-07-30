@@ -9,14 +9,14 @@ import caffeine
 
 config = {
             # Change for each project
-            'S3_prefix'                 : 'hoosier1/vid07',  # where is it in the bucket?
+            'S3_prefix'                 : 'Audio_Entertainment/CBS Radio Mysteries/Better_Quality/CBSRMT_BQ_Group12',  # where is it in the bucket?
 
             # 'destination_key_prefix'    : '',   # what part of S3_prefix do you want to keep?
 
             # Rarely Changeo
             'download_log_filename_prefix': 'logs/S3download_log',
             'bucket'                    : 'zuhlbucket1',
-            'destination_dir'           : '/Users/fritz/Putain/hoosier1_next'
+            'destination_dir'           : '/Users/fritz/Documents/CBSRMT_BQ_Group12'
           }
 
 logging.basicConfig(filename=local_file_handling.filename_log(fname=config['download_log_filename_prefix']),

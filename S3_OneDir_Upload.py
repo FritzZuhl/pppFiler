@@ -9,7 +9,7 @@ import logging
 import pathlib
 
 # The directory to upload
-these_dirs = ['vid_20190702']
+these_dirs = ['vid_20190708']
 
 config_template = {
         "top_path"                      : '{}',
