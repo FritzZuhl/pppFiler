@@ -9,11 +9,11 @@ import logging
 import pathlib
 
 # The directory to upload
-these_dirs = ['vid_20190708']
+#these_dirs = ['vid_20200202c']
 
 config_template = {
-        "top_path"                      : '{}',
-        "local_source_dir"              : '/Users/fritz/Downloads',
+        "top_path"                      : 'vid_20200321b',
+        "local_source_dir"              : '/Users/fritz/Downloads/uploads',
         "major_dir_on_s3"               : 'hoosier1',
         "check_existing_keys"           : True,        # does a file-level check
 
@@ -49,7 +49,7 @@ if check_logs:
     these_dirs = [x for x in these_dirs if x not in completed_dirs]
 # End check upload
 
-these_dirs.sort(reverse=False)
+# these_dirs.sort(reverse=False)
 
 # Log Setup
 dir_log = local_file_handling.filename_log('logs/directories_uploaded')

@@ -1,7 +1,6 @@
 import logging
 import time
 import os
-import pandas as pd
 import boto3
 import local_file_handling
 import AWS_S3
