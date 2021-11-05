@@ -11,12 +11,13 @@ config = {
             # Change for each project. where is it in the bucket?
             # 'S3_prefix'                 : 'Audio_Entertainment/CBS Radio Mysteries/Better_Quality/CBSRMT_BQ_Group13',
             # 'S3_prefix' :                 'hoosier5/group_01',
-            'S3_prefix' : 'Audio_Entertainment/CBS Radio Mysteries/Better_Quality/CBSRMT_BQ_Group09',
+            # 'S3_prefix' : 'Audio_Entertainment/CBS Radio Mysteries/Better_Quality/CBSRMT_BQ_Group09',
+            'S3_prefix' : 'hoosier5/group_05',
             # 'destination_key_prefix'    : '',   # what part of S3_prefix do you want to keep?
-            # Rarely Changeo
+            # Rarely Change
             'download_log_filename_prefix': 'logs/S3download_log',
             'bucket'                      : 'zuhlbucket1',
-            'destination_dir'             :  '/Users/fritz/downloads/'
+            'destination_dir'             :  '/Users/fritz/Putain/Putain_Process/Scrutinize/'
           }
 
 logging.basicConfig(filename=local_file_handling.filename_log(fname=config['download_log_filename_prefix']),
@@ -52,6 +53,7 @@ for i, this_key in enumerate(particular_keys):
         logging.log(logging.INFO,
                     "Download %d objects. %d objects to go. %.1f%% completed" %
                     (i, files_to_go, percent_complete))
+        print("Downloaded this key %s. Complete filepath %s" % (this_key,dest_complete_path))
     except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == "404":
             logging.log(logging.WARNING, "The object %s does not exist." % this_key)

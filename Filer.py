@@ -1,9 +1,7 @@
-import os, string, os.path
+import os.path
+import sys
 
-TRUE  = 1
-FALSE = 0
-
-BASE_DIR = "C:\Users\\fzuhl\Documents\ppp"
+BASE_DIR = "/Users/fritz/Downloads/uploads"
 
 # ##################################################
 # Level 2 Processing
@@ -39,7 +37,8 @@ BASE_DIR = "C:\Users\\fzuhl\Documents\ppp"
 # SOURCE_DIR      = BASE_DIR + "\\Level 5, toBeArchived\\"
 # RESULT_DIR_BASE = BASE_DIR + "\\Volumes\Level 5\\"
 # VOLUME_PREFIX = "L5_"
-# VOLSUFFIX_START = 254   #did L5_253 on Feb. 14, 2018 
+# VOLSUFFIX_START = 254   #did L5_253 on Feb. 14, 2018
+# SOURCE_DIR = BASE_DIR
 
 # ##################################################
 # Level 1 Processing
@@ -50,19 +49,29 @@ BASE_DIR = "C:\Users\\fzuhl\Documents\ppp"
 # VOLUME_PREFIX = "L1_"
 # VOLSUFFIX_START = 1560
 
+# ##################################################
+# Level 5 year 2021 Processing
+# ##################################################
+# TODO: use maximum directory file size in terms of number of files, rather than file size.
+#   reason: keep auditing in S3 easier.
+#   Nov. 4, 2021
+MAXDIRSIZE = 15728640  # 15 Mbyte directories
+SOURCE_DIR      = "/Users/fritz/Putain/Putain_Process/Extra_5"
+RESULT_DIR_BASE = '/Users/fritz/Putain/Putain_Process/Extra_5_folders'
+VOLUME_PREFIX = "L5_Y2021_"
+VOLSUFFIX_START = 274   #did L5_273 on Nov. 4, 2021
 
-if os.path.exists(SOURCE_DIR):
+try:
     os.chdir(SOURCE_DIR)
-else:
-    print SOURCE_DIR, "does not exists.  Would like to exit but don't know how."
-#    return()
+except FileNotFoundError:
+    error_message = "Cannot move to source directory {}.".format(SOURCE_DIR)
+    print(error_message)
+    sys.exit()
 
 # get source dir listing of files
 SOURCE_DIRListing = os.listdir(SOURCE_DIR)
+SOURCE_DIRListing = [x for x in SOURCE_DIRListing if x != ".DS_Store"]
 SOURCE_DIRListing.sort()
-
-movedFileSize = 0L
-currentVolSize = 0L
 
 # make the result base directory if it does not exists
 if not os.path.exists(RESULT_DIR_BASE):
@@ -70,27 +79,30 @@ if not os.path.exists(RESULT_DIR_BASE):
 
 # make the result directory for the first time.
 volumSuffix=VOLSUFFIX_START
-current_result_dir = RESULT_DIR_BASE + VOLUME_PREFIX + str(volumSuffix)
+current_result_dir = RESULT_DIR_BASE + '/' + VOLUME_PREFIX + str(volumSuffix)
 os.mkdir(current_result_dir)
 MadeDir = 1
 
-for i in SOURCE_DIRListing :
-    movedFileSize = os.path.getsize(i)
-    print "File", i,  "size:", movedFileSize, "in volumn", current_result_dir, ".", "Current volumn size", currentVolSize, "."
-   
-    currentVolSize = currentVolSize + long(movedFileSize)
-    
-    oldFile = str(i)
+movedFileSize = 0
+currentVolSize = 0
+for index, fileName in enumerate(SOURCE_DIRListing):
+    movedFileSize = os.path.getsize(fileName)
+    log_string = "File Count {}, File name: {}. File size {}, in directory {}. Current volumn size: {}".format(index,
+                                                                                                               fileName,
+                                                                                                               movedFileSize,
+                                                                                                               current_result_dir,
+                                                                                                               currentVolSize)
+    print(log_string)
+    currentVolSize = currentVolSize + movedFileSize
+    oldFile = str(fileName)
     newfilename = current_result_dir + "/" + oldFile
     os.rename(oldFile,newfilename)
-    
-    if currentVolSize > MAXDIRSIZE :
-        print "____________________________________________________"
-        print "Making new volume", volumSuffix + 1
-        volumSuffix = volumSuffix + 1
-        current_result_dir = RESULT_DIR_BASE + VOLUME_PREFIX + str(volumSuffix)
+    if currentVolSize > MAXDIRSIZE:
+        volumSuffix += 1
+        print("_______Making new volume {}________".format(volumSuffix))
+        current_result_dir = RESULT_DIR_BASE + '/' + VOLUME_PREFIX + str(volumSuffix)
         os.mkdir(current_result_dir)
-        MadeDir = MadeDir + 1
-        currentVolSize = 0L    
+        MadeDir += 1
+        currentVolSize = 0
 
-print "Total number of directories made:", MadeDir
+print("Total number of directories made:", MadeDir)

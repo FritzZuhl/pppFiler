@@ -12,8 +12,8 @@ import pathlib
 #these_dirs = ['vid_20200202c']
 
 config_template = {
-        "top_path"                      : 'vid_20200321b',
-        "local_source_dir"              : '/Users/fritz/Downloads/uploads',
+        "top_path"                      : 'vid_20210412_reviewed',
+        "local_source_dir"              : '/Users/fritz/Putain_Process/uploads/hoosier1',
         "major_dir_on_s3"               : 'hoosier1',
         "check_existing_keys"           : True,        # does a file-level check
 
@@ -58,7 +58,8 @@ directory_logger.setLevel(logging.INFO)
 log_file_handler = logging.FileHandler(dir_log)
 
 config_list = []
-for i, this_dir in enumerate(these_dirs):
+these_dirs = [config_template['top_path']]
+for this_dir in (these_dirs):
     this_config = config_template.copy()
 
     # Construct Configuration Object for this iteration

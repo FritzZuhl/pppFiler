@@ -32,6 +32,7 @@ def upload_S3(**kwargs):
     target_files_1 = local_file_handling.get_filenames(local_dir)
     ignore_files = kwargs['ignore_files'].union({'.DS_Store', 'descript.ion'})
     target_files_2 = [x for x in target_files_1 if x not in ignore_files]
+    target_files_2.sort()
 
 
     # Connect to S3
