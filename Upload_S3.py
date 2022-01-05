@@ -1,4 +1,11 @@
 
+
+DESTINATION_FOLDER_ON_S3 = 'hoosier1'
+
+# Departure Deck on local machine
+DEPARTURE_DECK = '/Users/fritz/S3_Deck'
+
+
 import sys
 from typing import List
 
@@ -11,11 +18,11 @@ import pathlib
 
 config_template = {
         # change each project
-        "local_source_dir"              : '/Users/fritz/Dropbox/My Mac (Fritz’s MacBook Pro)/Documents/Upload_S3_Deck', # Departure folder
-        "major_dir_on_s3"               : 'hoosier6',  # receiving dir. within bucket on S3
+        "local_source_dir"              : DEPARTURE_DECK, # Departure folder
+        "major_dir_on_s3"               : DESTINATION_FOLDER_ON_S3,  # receiving dir. within bucket on S3
 
         # don't change often
-        "bucket_name"                   : 'zuhlbucket1',
+        "bucket_name"                   : 'zuhlbucket1',  # Destination Bucket on S3
         "upload_log_filename_prefix"    : "logs/S3Upload_log",
         "ignore_files"                  : {'.DS_Store', 'descript.ion'},
 
@@ -33,20 +40,6 @@ if not local_source_dir.exists():
 
 # Get List of directories in Local Source Directory
 these_dirs: List[str] = [x.stem for x in local_source_dir.iterdir() if x.is_dir()]
-
-
-# path = 'logs/directories_uploaded_Date_2020-03-21.log'
-# def words_in_text(path):
-#     with open(path) as handle:
-#         for line in handle:
-#             words = line.split()
-#             if words[0] == 'Completed':
-#                 yield words[-1]
-#
-# completed_dirs = [x for x in words_in_text(path)]
-#
-# these_dirs = [x for x in these_dirs if x not in completed_dirs]
-#
 these_dirs.sort(reverse=False)
 
 # Log Setup

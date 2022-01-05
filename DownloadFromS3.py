@@ -1,3 +1,9 @@
+
+DIR2GET = 'hoosier5/group_19' # Folder to get on S3. Get entire pathname based from bucket
+
+# Departure Deck on local machine
+RECEIVE_DECK = '/Users/fritz/S3_Deck'
+
 import sys
 sys.path.append('/Users/fritz/Dropbox/pppFiler/utils')
 import boto3
@@ -8,16 +14,13 @@ import local_file_handling
 import caffeine
 
 config = {
-            # Change for each project. where is it in the bucket?
-            # 'S3_prefix'                 : 'Audio_Entertainment/CBS Radio Mysteries/Better_Quality/CBSRMT_BQ_Group13',
-            # 'S3_prefix' :                 'hoosier5/group_01',
-            # 'S3_prefix' : 'Audio_Entertainment/CBS Radio Mysteries/Better_Quality/CBSRMT_BQ_Group09',
-            'S3_prefix' : 'hoosier5/group_05',
-            # 'destination_key_prefix'    : '',   # what part of S3_prefix do you want to keep?
+            # Change for each project
+            'destination_dir'   : RECEIVE_DECK,
+            'S3_prefix'         : DIR2GET,
+
             # Rarely Change
             'download_log_filename_prefix': 'logs/S3download_log',
             'bucket'                      : 'zuhlbucket1',
-            'destination_dir'             :  '/Users/fritz/Putain/Putain_Process/Scrutinize/'
           }
 
 logging.basicConfig(filename=local_file_handling.filename_log(fname=config['download_log_filename_prefix']),
