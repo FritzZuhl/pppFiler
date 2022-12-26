@@ -1,8 +1,8 @@
 
-DIR2GET = 'hoosier5/group_19' # Folder to get on S3. Get entire pathname based from bucket
+DIR2GET = 'hoosier5/group_17'  # Folder to get on S3. Get entire pathname based from bucket
 
 # Departure Deck on local machine
-RECEIVE_DECK = '/Users/fritz/S3_Deck'
+RECEIVE_DECK = '/Users/fritz/S3Transfers'
 
 import sys
 sys.path.append('/Users/fritz/Dropbox/pppFiler/utils')

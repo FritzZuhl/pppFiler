@@ -1,9 +1,10 @@
 
+# DESTINATION_FOLDER_ON_S3 = 'hoosier1_extension2'   # for videos
+DESTINATION_FOLDER_ON_S3 = 'hoosier6'   # for pictures
 
-DESTINATION_FOLDER_ON_S3 = 'hoosier1'
 
 # Departure Deck on local machine
-DEPARTURE_DECK = '/Users/fritz/S3_Deck'
+DEPARTURE_DECK = '/Users/fritz/S3Transfers'
 
 
 import sys

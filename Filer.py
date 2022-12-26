@@ -1,7 +1,7 @@
 import os.path
 import sys
 
-BASE_DIR = "/Users/fritz/Downloads/uploads"
+# BASE_DIR = "/Users/fritz/Downloads/uploads"
 
 # ##################################################
 # Level 2 Processing
@@ -56,10 +56,10 @@ BASE_DIR = "/Users/fritz/Downloads/uploads"
 #   reason: keep auditing in S3 easier.
 #   Nov. 4, 2021
 MAXDIRSIZE = 15728640  # 15 Mbyte directories
-SOURCE_DIR      = "/Users/fritz/Putain/Putain_Process/Extra_5"
-RESULT_DIR_BASE = '/Users/fritz/Putain/Putain_Process/Extra_5_folders'
-VOLUME_PREFIX = "L5_Y2021_"
-VOLSUFFIX_START = 274   #did L5_273 on Nov. 4, 2021
+SOURCE_DIR      = "/Users/fritz/Putain/Putain_Process/NextGen_Pics/NextGen_Level5"
+RESULT_DIR_BASE = '/Users/fritz/Putain/Putain_Process/NextGen_Pics/NextGen_Level5_folders'
+VOLUME_PREFIX = "L5_Y2022_"   # change this when year changes.
+VOLSUFFIX_START = 345   # did L5_344 on Nov. 27, 2022
 
 try:
     os.chdir(SOURCE_DIR)
@@ -78,20 +78,20 @@ if not os.path.exists(RESULT_DIR_BASE):
     os.mkdir(RESULT_DIR_BASE)
 
 # make the result directory for the first time.
-volumSuffix=VOLSUFFIX_START
+volumSuffix = VOLSUFFIX_START
 current_result_dir = RESULT_DIR_BASE + '/' + VOLUME_PREFIX + str(volumSuffix)
-os.mkdir(current_result_dir)
+try:
+    os.mkdir(current_result_dir)
+except FileExistsError as e:
+    print("Start Folder Exists.\n")
+
 MadeDir = 1
 
 movedFileSize = 0
 currentVolSize = 0
 for index, fileName in enumerate(SOURCE_DIRListing):
     movedFileSize = os.path.getsize(fileName)
-    log_string = "File Count {}, File name: {}. File size {}, in directory {}. Current volumn size: {}".format(index,
-                                                                                                               fileName,
-                                                                                                               movedFileSize,
-                                                                                                               current_result_dir,
-                                                                                                               currentVolSize)
+    log_string = "File Count {}, file name {}, directory {}. Size is: {}".format(index, fileName, current_result_dir, currentVolSize)
     print(log_string)
     currentVolSize = currentVolSize + movedFileSize
     oldFile = str(fileName)
@@ -106,3 +106,4 @@ for index, fileName in enumerate(SOURCE_DIRListing):
         currentVolSize = 0
 
 print("Total number of directories made:", MadeDir)
+
