@@ -1,17 +1,19 @@
 
-DIR2GET = 'hoosier5/group_17'  # Folder to get on S3. Get entire pathname based from bucket
+DIR2GET = 'hoosier1/vid_20190828'  # Folder to get on S3. Get entire pathname based from bucket
 
 # Departure Deck on local machine
-RECEIVE_DECK = '/Users/fritz/S3Transfers'
+RECEIVE_DECK = '/Users/fzuhl/S3Transfers'
 
 import sys
-sys.path.append('/Users/fritz/Dropbox/pppFiler/utils')
+sys.path.append('utils')
 import boto3
 import botocore
 import logging
 import AWS_S3
 import local_file_handling
+import pathlib
 import caffeine
+import Purge_Volumes
 
 config = {
             # Change for each project
@@ -27,6 +29,17 @@ logging.basicConfig(filename=local_file_handling.filename_log(fname=config['down
                     filemode='w',
                     format="%(asctime)s, Log level: %(levelname)s, msg: %(message)s",
                     level=logging.INFO)
+
+# Filter/Purge from Purge_Volumes
+if pathlib.Path(DIR2GET).name in Purge_Volumes.purge_list :
+    info_string = f"This volume is on purge list: {DIR2GET}"
+    logging.log(logging.INFO, info_string)
+    exit(0)
+
+
+
+
+
 
 # Get the key ends
 # These are complete path keys that belong to a particular prefix.

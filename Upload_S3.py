@@ -1,17 +1,17 @@
 
 # DESTINATION_FOLDER_ON_S3 = 'hoosier1_extension2'   # for videos
-DESTINATION_FOLDER_ON_S3 = 'hoosier6'   # for pictures
+DESTINATION_FOLDER_ON_S3 = 'hoosier1_extension3'   # for pictures
 
 
 # Departure Deck on local machine
-DEPARTURE_DECK = '/Users/fritz/S3Transfers'
+DEPARTURE_DECK = '/Users/fzuhl/S3Transfers'
 
 
 import sys
 from typing import List
 
 import caffeine
-sys.path.append('/Users/fritz/Dropbox/pppFiler/utils')
+sys.path.append('utils')
 import upload_S3
 import local_file_handling
 import logging
